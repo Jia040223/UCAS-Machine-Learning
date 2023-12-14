@@ -201,7 +201,7 @@ if __name__ == '__main__':
 
 
     # random_text_Y_predict = {}
-    data_loader = DataLoader('DataSet')
+    data_loader = DataLoader('.\DataSet')
     data_loader.load_train_data()
     data_loader.load_train_label()
     data_loader.load_test_data()#加载完所有的训练数据，标签和样本
@@ -209,16 +209,16 @@ if __name__ == '__main__':
 
     print(data_loader.text_train_data)
     for key,list in data_loader.text_train_data.items():
-        text_X_train = list
-        Y_train = data_loader.train_label[key]
+        text_X_train = list.copy()
+        Y_train = data_loader.train_label[key].copy()
 
-        random_keys = random.sample(data_loader.text_train_data.keys(), 1)
-        for array in data_loader.text_train_data[random_keys[0]]:
-            # print(data_loader.text_train_data[random_keys[0]])
-            text_X_train.append(array)
-        for array in data_loader.train_label[random_keys[0]]:
-            # print(data_loader.train_label[random_keys[0]])
-            Y_train.append(array)
+        # random_keys = random.sample(data_loader.text_train_data.keys(), 1)
+        # for array in data_loader.text_train_data[random_keys[0]]:
+        #     # print(data_loader.text_train_data[random_keys[0]])
+        #     text_X_train.append(array)
+        # for array in data_loader.train_label[random_keys[0]]:
+        #     # print(data_loader.train_label[random_keys[0]])
+        #     Y_train.append(array)
         # for array in data_loader.text_train_data[random_keys[1]]:
         #     # print(data_loader.text_train_data[random_keys[1]])
         #     text_X_train.append(array)
@@ -325,8 +325,8 @@ if __name__ == '__main__':
     # #打印出不同的基学习器对于text特征的预测
 
     for key,list in data_loader.visual_train_data.items():
-        visual_X_train = list
-        Y_train = data_loader.train_label[key]
+        visual_X_train = list.copy()
+        Y_train = data_loader.train_label[key].copy()
         df = pd.DataFrame(visual_X_train)
         df.to_csv('check_visual_X.csv', index=False) 
         df = pd.DataFrame(Y_train)
@@ -417,8 +417,8 @@ if __name__ == '__main__':
     df_visual_bagging.to_csv('bagging_visual.csv', index=False) 
 
     for key,list in data_loader.audio_train_data.items():
-        audio_X_train = list
-        Y_train = data_loader.train_label[key]
+        audio_X_train = list.copy()
+        Y_train = data_loader.train_label[key].copy()
         #将dataloader中的audio训练数据和对应的label给印出来
         audio_X_train = np.array(audio_X_train)
         Y_train = np.array(Y_train)
