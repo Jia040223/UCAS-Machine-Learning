@@ -7,6 +7,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import f1_score
 from scipy.stats import mode
 from openpyxl import load_workbook
+import os
+
+print(os.getcwd())
 
 class DataLoader(object):
     def __init__(self, DataPath):
@@ -159,13 +162,13 @@ class DecisionTree(object):
         np.savetxt('dicision_output.csv', Y_predict, delimiter = ',', fmt = '%d')
 
     def cal_correct_rate(self):
-        Y_true = np.loadtxt('C:/Users/32175/Desktop/Machine_Learning/UCAS-Machine-Learning/reference_answer.csv', dtype = int)
+        Y_true = np.loadtxt('.\\reference_answer.csv', dtype = int)
         weighted_f1 = f1_score(Y_true, self.Y_predict, average='weighted')
         print('weighted_f1:',weighted_f1)
 
 
 if __name__ == '__main__':
-    Y_true = np.loadtxt('C:/Users/32175/Desktop/Machine_Learning/UCAS-Machine-Learning/reference_answer.csv', dtype = int)
+    Y_true = np.loadtxt('.\\reference_answer.csv', dtype = int)
 
     text_DecisionTreemodles = {}
     visual_DecisionTreemodles = {}
@@ -198,7 +201,7 @@ if __name__ == '__main__':
 
 
     # random_text_Y_predict = {}
-    data_loader = DataLoader('C:/Users/32175/Desktop/Machine_Learning/UCAS-Machine-Learning/DataSet')
+    data_loader = DataLoader('DataSet')
     data_loader.load_train_data()
     data_loader.load_train_label()
     data_loader.load_test_data()#加载完所有的训练数据，标签和样本
