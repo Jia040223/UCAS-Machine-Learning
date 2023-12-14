@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import f1_score
 from scipy.stats import mode
@@ -43,6 +45,7 @@ class DataLoader(object):
         for key,value in self.visual_features.items():
             if key in self.train_ids:
                 self.visual_train_data[key] = value
+        # print(self.visual_train_data)
         # for key,list in self.train_data.items():
         #     for array in list:
         #         print(len(array))
@@ -110,7 +113,7 @@ class DataLoader(object):
 
 class DecisionTree(object):
     def __init__(self, train_data, train_label, test_data):
-        self.model = DecisionTreeClassifier()
+        self.model = RandomForestClassifier()
         self.train_data = train_data
         self.train_label = train_label
         self.test_data = test_data
@@ -134,7 +137,7 @@ class DecisionTree(object):
 
 
 if __name__ == '__main__':
-    data_loader = DataLoader('F:/CODES/Python/UCAS-Machine-Learning/DataSet/')
+    data_loader = DataLoader('C:/Users/32175/Desktop/Machine_Learning/UCAS-Machine-Learning/DataSet')
     data_loader.load_train_data()
     data_loader.load_train_label()
     data_loader.load_test_data()
@@ -156,6 +159,13 @@ if __name__ == '__main__':
     pred_audio = audio_model.predict()
     pred_final = mode(np.c_[pred_text, pred_audio, pred_visual], axis=1)[0]
 
-    Y_true = np.loadtxt('F:/CODES/Python/UCAS-Machine-Learning/reference_answer.csv', dtype = int)
+    Y_true = np.loadtxt('C:/Users/32175/Desktop/Machine_Learning/UCAS-Machine-Learning/reference_answer.csv', dtype = int)
     weighted_f1 = f1_score(Y_true, pred_final, average='weighted')
+    # count_2 = 0
+    # for i in range(len(Y_true)):
+    #     if Y_true[i] == pred_final[0][i] :
+    #         count_2 += 1
+    df = pd.DataFrame(pred_final)
+    df.to_csv('main_pred.csv', index=False) 
+    # print('rate_f2:',count_2/len(Y_true))
     print('weighted_f1:',weighted_f1)   
